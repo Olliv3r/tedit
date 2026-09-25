@@ -1,4 +1,4 @@
-# TEdit v1.0
+# TEdit v1.0.2
 
 TEdit é um gerenciador de temas e ambientes **isolados** de Neovim para Linux e Termux. Ele permite manter sua configuração normal em `~/.config/nvim`, instalar distribuições como NvChad/LazyVim/AstroNvim em ambientes separados e usar o preset próprio **TEdit Modern**.
 
@@ -103,7 +103,17 @@ tedit nvim run --preset nvchad -- README.md
 
 ## TEdit Modern
 
-O preset próprio usa `lazy.nvim` e gera seu `init.lua` a partir de um pequeno estado gerenciado pelo TEdit.
+O **TEdit Modern** é a distribuição/preset própria do projeto. Diferente de NvChad, LazyVim e AstroNvim, ele não clona uma configuração pronta de terceiros: o próprio TEdit mantém um pequeno estado em `.tedit-modern.json` e gera o `init.lua` do ambiente isolado.
+
+A ideia é manter três camadas separadas:
+
+1. **TEdit** gerencia instalação, isolamento, features, linguagens e regeneração da configuração;
+2. **lazy.nvim** instala e atualiza os plugins dentro do ambiente `tedit-modern`;
+3. **Neovim** continua sendo o editor e executa LSP, Treesitter, autocomplete, Telescope e os demais componentes.
+
+Isso significa que `tedit-modern` não altera `~/.config/nvim`. Ele roda com `NVIM_APPNAME=tedit-nvim-tedit-modern`, mantendo config, dados, cache e estado separados da sua instalação normal.
+
+O arquivo `init.lua` é **gerado**. Se você alterar features ou linguagens com a CLI, execute `tedit nvim modern sync` para garantir que a configuração reflita o estado atual. Para customizações manuais grandes, prefira um preset externo ou espere uma futura camada de `custom.lua`, porque alterações diretas no arquivo gerado podem ser sobrescritas.
 
 Features padrão:
 
@@ -199,6 +209,28 @@ tokyo-night
 vscode-dark-modern
 ```
 
+### Galeria e referências dos temas
+
+As imagens abaixo são **previews ilustrativos** para comparação rápida. Para ver a renderização real no seu terminal/Neovim, use `tedit theme preview <tema>` ou `tedit nvim theme preview <tema>`. Os nomes dos temas apontam para os projetos/origens usados como referência visual.
+
+<table>
+<tr>
+<td width="50%"><a href="https://github.com/folke/tokyonight.nvim"><strong>Tokyo Night</strong></a><br><img src="docs/images/tokyo-night.png" alt="Preview Tokyo Night"></td>
+<td width="50%"><a href="https://github.com/catppuccin/nvim"><strong>Catppuccin</strong></a><br><img src="docs/images/catppuccin.png" alt="Preview Catppuccin"></td>
+</tr>
+<tr>
+<td width="50%"><a href="https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_modern.json"><strong>VS Code Dark Modern</strong></a><br><img src="docs/images/vscode-dark-modern.png" alt="Preview VS Code Dark Modern"></td>
+<td width="50%"><a href="https://github.com/projekt0n/github-nvim-theme"><strong>GitHub Dark</strong></a><br><img src="docs/images/github-dark.png" alt="Preview GitHub Dark"></td>
+</tr>
+<tr>
+<td width="50%"><a href="https://github.com/morhetz/gruvbox"><strong>Gruvbox</strong></a><br><img src="docs/images/gruvbox.png" alt="Preview Gruvbox"></td>
+<td width="50%"><a href="https://github.com/shaunsingh/nord.nvim"><strong>Nord</strong></a><br><img src="docs/images/nord.png" alt="Preview Nord"></td>
+</tr>
+<tr>
+<td colspan="2"><a href="https://github.com/atom/one-dark-syntax"><strong>Atom One Dark</strong></a><br><img src="docs/images/atom-one-dark.png" alt="Preview Atom One Dark"></td>
+</tr>
+</table>
+
 Aplicação explícita:
 
 ```bash
@@ -245,7 +277,7 @@ tedit debug --report
 Exemplo:
 
 ```text
-TEdit: 1.0.0
+TEdit: 1.0.2
 Python: 3.x
 Neovim: NVIM v0.x
 Git: git version x.x
@@ -402,7 +434,7 @@ A v1.0 fecha a primeira arquitetura estável. Evoluções naturais:
 
 - instalação opcional de language servers por provider (`npm`, `pipx`, package manager);
 - sistema de plugins extras sem editar Lua manualmente;
-- screenshots/previews ricos da TUI;
+- TUI mais interativa e previews capturados diretamente de sessões reais;
 - import/export de perfis TEdit Modern;
 - testes end-to-end executando uma instalação real do Neovim em CI;
 - releases empacotados e atualização do próprio TEdit.

@@ -85,7 +85,7 @@ def render_init(state: dict) -> str:
     if "git" in features:
         specs.append('''{ "lewis6991/gitsigns.nvim", opts = {} }''')
     if "terminal" in features:
-        specs.append('''{ "akinsho/toggleterm.nvim", version = "*", keys = { { "<C-\\>", "<cmd>ToggleTerm<cr>", desc = "Terminal" } }, opts = { direction = "float" } }''')
+        specs.append('''{ "akinsho/toggleterm.nvim", version = "*", keys = { { [[<C-\\>]], "<cmd>ToggleTerm<cr>", desc = "Terminal" } }, opts = { direction = "float" } }''')
     if "treesitter" in features:
         specs.append('''{ "nvim-treesitter/nvim-treesitter", lazy = false, build = ":TSUpdate", config = function() local ts = require("nvim-treesitter"); ts.setup({}); local parsers = %s; if #parsers > 0 then ts.install(parsers) end end }''' % _lua_list(parsers))
 

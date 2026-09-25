@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.2 - 2026-09-25
+
+### Added
+
+- galeria com previews separados para todos os sete temas incluídos;
+- links no README para os projetos/origens visuais de Tokyo Night, Catppuccin, VS Code Dark Modern, GitHub Dark, Gruvbox, Nord e Atom One Dark;
+- explicação mais detalhada da arquitetura e do isolamento do `tedit-modern`.
+
+### Documentation
+
+- deixa explícito que os previews do README são ilustrativos e que o preview real deve ser feito pelos comandos do TEdit.
+
+## 1.0.1 - 2026-09-25
+
+### Fixed
+
+- corrige o mapeamento `Ctrl+\` do ToggleTerm no preset `tedit-modern`;
+- evita `E5112: invalid escape sequence` no `init.lua` gerado;
+- o atalho agora é emitido como long string Lua (`[[<C-\>]]`), sem escape ambíguo.
+
 ## 1.0.0 - 2026-09-25
 
 ### Added

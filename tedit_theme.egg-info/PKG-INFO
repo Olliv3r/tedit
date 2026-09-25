@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: tedit-theme
-Version: 1.0.0
+Version: 1.0.1
 Summary: Theme preview, isolated Neovim presets, diagnostics and a configurable TEdit Modern IDE environment.
 License: MIT
 Requires-Python: >=3.9
@@ -253,7 +253,7 @@ tedit debug --report
 Exemplo:
 
 ```text
-TEdit: 1.0.0
+TEdit: 1.0.1
 Python: 3.x
 Neovim: NVIM v0.x
 Git: git version x.x
