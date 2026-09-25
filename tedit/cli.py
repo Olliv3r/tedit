@@ -15,6 +15,7 @@ from .nvim_manager import (
     remove as nvim_remove, current_preset as nvim_current,
     appname as nvim_appname, config_dir as nvim_config_dir,
     run as nvim_run, doctor as nvim_doctor, update as nvim_update,
+    current_layout as nvim_current_layout, set_layout as nvim_set_layout,
 )
 
 
@@ -51,7 +52,8 @@ def parser():
     nr = ns.add_parser("remove"); nr.add_argument("preset")
     np = ns.add_parser("path"); np.add_argument("preset")
     ne = ns.add_parser("env"); ne.add_argument("preset", nargs="?")
-    nrun = ns.add_parser("run"); nrun.add_argument("--preset"); nrun.add_argument("args", nargs=argparse.REMAINDER)
+    nrun = ns.add_parser("run"); nrun.add_argument("--preset"); nrun.add_argument("--layout", choices=["auto", "compact", "desktop", "native"]); nrun.add_argument("args", nargs=argparse.REMAINDER)
+    nlayout = ns.add_parser("layout"); nlayout.add_argument("mode", nargs="?", choices=["auto", "compact", "desktop", "native"])
     ns.add_parser("doctor")
     nup = ns.add_parser("update"); nup.add_argument("preset", nargs="?"); nup.add_argument("--replace", action="store_true")
 
@@ -158,9 +160,14 @@ def main():
                 preset = a.preset or nvim_current()
                 if not preset: raise ValueError("Nenhum preset ativo")
                 print(f"NVIM_APPNAME={nvim_appname(preset)}")
-            elif a.sub == "run": return nvim_run(a.preset, a.args)
+            elif a.sub == "run": return nvim_run(a.preset, a.args, a.layout)
+            elif a.sub == "layout":
+                if a.mode:
+                    print("Layout:", nvim_set_layout(a.mode))
+                else:
+                    print(nvim_current_layout())
             elif a.sub == "doctor":
-                d = nvim_doctor(); print("nvim:", d["nvim"] or "missing"); print("git:", d["git"] or "missing"); print("current:", d["current"] or "none")
+                d = nvim_doctor(); print("nvim:", d["nvim"] or "missing"); print("git:", d["git"] or "missing"); print("current:", d["current"] or "none"); print("layout:", d["layout"])
                 for row in d["presets"]: print(("✓" if row["installed"] else "-"), row["id"], row["config"])
                 for issue in d["issues"]: print("!", issue)
             elif a.sub == "update":

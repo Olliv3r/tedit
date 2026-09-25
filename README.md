@@ -1,8 +1,15 @@
-# TEdit v1.0.2
+# TEdit v1.1.0
 
 TEdit é um gerenciador de temas e ambientes **isolados** de Neovim para Linux e Termux. Ele permite manter sua configuração normal em `~/.config/nvim`, instalar distribuições como NvChad/LazyVim/AstroNvim em ambientes separados e usar o preset próprio **TEdit Modern**.
 
 O princípio central é simples: experimentar sem transformar `~/.config/nvim` em laboratório.
+
+## Destaques da v1.1
+
+- layout responsivo para Termux, telas estreitas e desktop;
+- modos `auto`, `compact`, `desktop` e `native`;
+- Neo-tree e Telescope responsivos no TEdit Modern;
+- ajuste temporário de sidebars em NvChad, LazyVim e AstroNvim sem editar os presets;
 
 ## Destaques da v1.0
 
@@ -100,6 +107,58 @@ Abra arquivos:
 tedit nvim run -- main.py
 tedit nvim run --preset nvchad -- README.md
 ```
+
+## Gutter compacto no Termux
+
+Em telas estreitas, o TEdit recupera as colunas entre a numeração e o texto sem esconder diagnósticos:
+
+```lua
+signcolumn = "number"
+foldcolumn = "0"
+numberwidth = 2
+statuscolumn = ""
+```
+
+Assim, sinais de Git/LSP usam a própria coluna dos números e a área de edição começa imediatamente depois da numeração. O comportamento é aplicado automaticamente em `layout auto` quando a tela tem menos de 100 colunas, ou sempre com:
+
+```bash
+tedit nvim layout compact
+```
+
+## Layout responsivo
+
+A v1.1 trata telas estreitas como Termux em modo retrato sem alterar permanentemente NvChad, LazyVim ou AstroNvim. O padrão é `auto`:
+
+```bash
+tedit nvim layout auto
+```
+
+No modo `auto`, o TEdit usa layout compacto quando o Neovim detecta menos de 100 colunas e layout desktop em telas maiores. Consulte o modo atual com:
+
+```bash
+tedit nvim layout
+```
+
+Modos disponíveis:
+
+```text
+auto      adapta à largura atual do terminal
+compact   prioriza a área de edição em telas estreitas
+desktop   mantém painéis mais largos para telas grandes
+native    desliga o shim de layout do TEdit
+```
+
+Você também pode sobrescrever o modo apenas para uma execução:
+
+```bash
+tedit nvim run --preset astronvim --layout compact
+tedit nvim run --preset nvchad --layout desktop
+tedit nvim run --preset lazyvim --layout native
+```
+
+Nos presets externos, o TEdit injeta um pequeno script somente no processo atual do Neovim. Ele reage a `VimResized`, `WinEnter` e `FileType`, reduzindo sidebars conhecidas como Neo-tree e NvimTree quando necessário. **Nenhum `init.lua` do NvChad/LazyVim/AstroNvim é editado por esse recurso.**
+
+No `tedit-modern`, o comportamento responsivo também faz parte da configuração gerada: o Neo-tree usa cerca de 30% da tela no modo compacto (limitado a 18–24 colunas) e o Telescope prefere layout vertical em telas estreitas.
 
 ## TEdit Modern
 

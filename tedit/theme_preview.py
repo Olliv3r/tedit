@@ -157,7 +157,10 @@ def _write_nvim_preview(root: Path, name: str) -> tuple[Path, Path]:
         "vim.opt.termguicolors = true",
         "vim.opt.number = true",
         "vim.opt.cursorline = true",
-        "vim.opt.signcolumn = 'yes'",
+        "vim.opt.signcolumn = 'number'",
+        "vim.opt.foldcolumn = '0'",
+        "vim.opt.numberwidth = 2",
+        "vim.opt.statuscolumn = ''",
         "vim.opt.statusline = ' TEdit Preview │ %f %= %l:%c '",
         f"vim.g.colors_name = {_lua_quote('tedit-preview-' + name)}",
     ]

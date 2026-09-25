@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.1.1
+
+- Corrige o gutter largo em telas estreitas/Termux.
+- No modo compacto, sinais de diagnóstico/Git compartilham a coluna dos números (`signcolumn=number`).
+- Remove a coluna de folds (`foldcolumn=0`) e reduz `numberwidth` para 2.
+- Limpa `statuscolumn` customizada no modo compacto para recuperar largura útil.
+- Aplica o ajuste ao TEdit Modern, previews e ao shim temporário de NvChad, LazyVim e AstroNvim.
+
+## 1.1.0
+
+- Adiciona layout responsivo `auto`, `compact`, `desktop` e `native`.
+- TEdit Modern passa a ajustar Neo-tree e Telescope para telas estreitas.
+- `tedit nvim run --layout <modo>` permite override por execução.
+- `tedit nvim layout <modo>` define o modo padrão para todos os presets.
+- NvChad, LazyVim e AstroNvim recebem um shim de layout temporário, sem alteração de seus arquivos de configuração.
+- Sidebars Neo-tree/NvimTree/Aerial/Outline e componentes compatíveis são redimensionados durante a execução.
+- Adiciona testes para responsividade e para garantir que presets externos não sejam modificados pelo shim.
+
 ## 1.0.2 - 2026-09-25
 
 ### Added

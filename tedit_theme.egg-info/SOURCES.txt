@@ -7,6 +7,7 @@ tedit/config.py
 tedit/detector.py
 tedit/diagnostics.py
 tedit/editors.py
+tedit/layout.py
 tedit/modern.py
 tedit/nvim_manager.py
 tedit/profile.py
@@ -56,6 +57,7 @@ tedit_theme.egg-info/SOURCES.txt
 tedit_theme.egg-info/dependency_links.txt
 tedit_theme.egg-info/entry_points.txt
 tedit_theme.egg-info/top_level.txt
+tests/test_layout.py
 tests/test_modern.py
 tests/test_nvim_safety.py
 tests/test_theme_preview.py

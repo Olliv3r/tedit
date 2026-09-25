@@ -9,7 +9,7 @@ from pathlib import Path
 
 from . import __version__
 from .config import APP_DIR
-from .nvim_manager import current_preset, list_presets, config_dir
+from .nvim_manager import current_preset, current_layout, list_presets, config_dir
 
 
 def _version(cmd: list[str]) -> str | None:
@@ -32,6 +32,7 @@ def report() -> str:
         f"Neovim: {_version(['nvim', '--version']) or 'missing'}",
         f"Git: {_version(['git', '--version']) or 'missing'}",
         f"Current preset: {current or 'none'}",
+        f"Layout: {current_layout()}",
         f"TEdit data: {APP_DIR}",
         f"XDG_CONFIG_HOME: {os.environ.get('XDG_CONFIG_HOME', str(Path.home() / '.config'))}",
         "",

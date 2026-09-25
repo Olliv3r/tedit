@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Iterable
 
 from .config import APP_DIR, ensure_dirs
+from .layout import DEFAULT_LAYOUT, LAYOUTS, normalize_layout, runtime_script_path
 
 PRESETS = {
     "nvchad": {
@@ -108,6 +109,20 @@ def current_preset() -> str | None:
     value = _read_state().get("current")
     return value if value in PRESETS else None
 
+
+
+
+def current_layout() -> str:
+    value = _read_state().get("layout", DEFAULT_LAYOUT)
+    return value if value in LAYOUTS else DEFAULT_LAYOUT
+
+
+def set_layout(mode: str) -> str:
+    mode = normalize_layout(mode)
+    state = _read_state()
+    state["layout"] = mode
+    _write_state(state)
+    return mode
 
 def use(preset: str) -> str:
     preset = preset.lower()
@@ -244,11 +259,19 @@ def environment(preset: str | None = None) -> dict[str, str]:
     return env
 
 
-def run(preset: str | None = None, args: Iterable[str] = ()) -> int:
+def run(preset: str | None = None, args: Iterable[str] = (), layout: str | None = None) -> int:
     if not shutil.which("nvim"):
         raise RuntimeError("nvim não encontrado no PATH")
     env = environment(preset)
-    cmd = ["nvim", *args]
+    mode = normalize_layout(layout or current_layout())
+    env["TEDIT_NVIM_LAYOUT"] = mode
+
+    cmd = ["nvim"]
+    if mode != "native":
+        script = runtime_script_path()
+        env["TEDIT_LAYOUT_SCRIPT"] = str(script)
+        cmd.extend(["--cmd", "lua dofile(vim.env.TEDIT_LAYOUT_SCRIPT)"])
+    cmd.extend(args)
     return subprocess.call(cmd, env=env)
 
 
@@ -266,4 +289,4 @@ def doctor() -> dict:
     for row in list_presets():
         if row["installed"] and not (Path(row["config"]) / "init.lua").exists():
             issues.append(f"{row['id']}: init.lua ausente")
-    return {"nvim": nvim, "git": git, "current": current, "presets": list_presets(), "issues": issues}
+    return {"nvim": nvim, "git": git, "current": current, "layout": current_layout(), "presets": list_presets(), "issues": issues}
