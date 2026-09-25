@@ -1,3 +1,11 @@
+Metadata-Version: 2.4
+Name: tedit-theme
+Version: 1.0.0
+Summary: Theme preview, isolated Neovim presets, diagnostics and a configurable TEdit Modern IDE environment.
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
 # TEdit v1.0
 
 TEdit é um gerenciador de temas e ambientes **isolados** de Neovim para Linux e Termux. Ele permite manter sua configuração normal em `~/.config/nvim`, instalar distribuições como NvChad/LazyVim/AstroNvim em ambientes separados e usar o preset próprio **TEdit Modern**.

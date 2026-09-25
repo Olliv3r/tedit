@@ -1,0 +1,2 @@
+[console_scripts]
+tedit = tedit.cli:main

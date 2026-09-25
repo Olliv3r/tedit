@@ -1,0 +1,17 @@
+{
+  "background": "#1f1f1f",
+  "surface": "#181818",
+  "foreground": "#cccccc",
+  "muted": "#6e7681",
+  "accent": "#0078d4",
+  "selection": "#264f78",
+  "line": "#2a2d2e",
+  "comment": "#6a9955",
+  "string": "#ce9178",
+  "number": "#b5cea8",
+  "keyword": "#c586c0",
+  "function": "#dcdcaa",
+  "type": "#4ec9b0",
+  "variable": "#9cdcfe",
+  "constant": "#4fc1ff"
+}

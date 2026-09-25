@@ -1,0 +1,5 @@
+"ui.background" = {}
+"ui.text" = "fg"
+"comment" = "comment"
+"string" = "green"
+"keyword" = "magenta"
